@@ -7,7 +7,7 @@ namespace ClassProject {
      : ReachabilityInterface(stateSize, inputSize)
     {
         if (stateSize == 0) {
-            throw std::runtime_error("stateSize must be greater than zero");
+            throw std::runtime_error("StateSize must be greater than zero");
         }
 
         numStates = stateSize;
@@ -71,7 +71,7 @@ namespace ClassProject {
     {
         if(stateVector.size() != numStates) 
         {
-            throw std::runtime_error("size does not match with number of state bits");
+            throw std::runtime_error("Size does not match with number of state bits");
         }
 
         if(!reachableReady)
@@ -164,7 +164,7 @@ namespace ClassProject {
     int Reachability::stateDistance(const std::vector<bool>& stateVector) 
     {
         if (stateVector.size() != numStates) {
-            throw std::runtime_error("size does not match with number of state bits");
+            throw std::runtime_error("Size does not match with number of state bits");
         }
 
         if (!isReachable(stateVector)) return -1;
@@ -175,18 +175,26 @@ namespace ClassProject {
         }
 
         // This should never happen if isReachable() worked correctly
-        throw std::logic_error("state is reachable but not found in stepReachableStateSet");
+        throw std::logic_error("State is reachable but not found in stepReachableStateSet");
     }
 
     // Set transition function for each state bit
     void Reachability::setTransitionFunctions(const std::vector<BDD_ID>& transitionFunctions) 
     {
+        if(transitionFunctions.size() != numStates) {
+            throw std::runtime_error("The number of transition functions does not match with that of state bits");
+        }
+
         this -> transitionFunctions = transitionFunctions;
     }
 
     // Set a new initial state
     void Reachability::setInitState(const std::vector<bool>& stateVector) 
     {
+        if (stateVector.size() != numStates) {
+            throw std::runtime_error("Size does not match with number of state bits");
+        }
+
         initState = stateVector;
     }
 
