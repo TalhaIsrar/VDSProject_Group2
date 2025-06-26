@@ -45,3 +45,22 @@ TEST_F(ReachabilityTest, SetInitState_errortest)
     EXPECT_THROW(fsm2->setInitState({false});, std::runtime_error);
     EXPECT_THROW(fsm2->setInitState({});, std::runtime_error);
 }
+
+TEST_F(ReachabilityTest, SetTransitionWorks_errortest)
+{
+    BDD_ID s0 = stateVars2.at(0);
+    BDD_ID s1 = stateVars2.at(1);
+
+    transitionFunctions.push_back(fsm2->neg(s0));
+    transitionFunctions.push_back(fsm2->neg(s1));
+    transitionFunctions.push_back(fsm2->and2(s1, s0));
+
+    EXPECT_THROW(fsm2->setTransitionFunctions(transitionFunctions), std::runtime_error);
+
+    transitionFunctions.pop_back();
+    transitionFunctions.pop_back();
+    EXPECT_THROW(fsm2->setTransitionFunctions(transitionFunctions), std::runtime_error);
+
+    transitionFunctions.push_back(100);
+    EXPECT_THROW(fsm2->setTransitionFunctions(transitionFunctions), std::runtime_error);
+}
