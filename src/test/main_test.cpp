@@ -528,6 +528,21 @@ TEST_F(GateTest, find_var_test){
     EXPECT_EQ(vars, reachable_vars);
 }
 
+// one more Find Variables
+TEST_F(SmallTest, find_var_test){
+    // F = x1*x2 + x1_bar*x2_bar*x3
+    BDD_ID _x2_AND_x3 = smallTest.and2(smallTest.neg(x2_ID), x3_ID);
+    BDD_ID _x1_AND__x2_AND_x3 = smallTest.and2(smallTest.neg(x1_ID), _x2_AND_x3);
+    BDD_ID x1_AND_x2 = smallTest.and2(x1_ID, x2_ID);
+    BDD_ID F = smallTest.or2(x1_AND_x2, _x1_AND__x2_AND_x3);
+
+    std::set<BDD_ID> reachable_vars = {x1_ID, x2_ID, x3_ID};
+    std::set<BDD_ID> vars = {};
+    smallTest.findVars(F, vars);
+    EXPECT_EQ(vars, reachable_vars);
+}
+
+
 
 TEST_F(BDDTest, CoFactorTrueTest) /* NOLINT */
 {
