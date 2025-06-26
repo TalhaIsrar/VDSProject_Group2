@@ -38,3 +38,10 @@ TEST_F(ReachabilityTest, Constructor_Test)
     ASSERT_THROW(std::make_unique<ClassProject::Reachability>(0), std::runtime_error);
     ASSERT_THROW(std::make_unique<ClassProject::Reachability>(0, 0), std::runtime_error);
 }
+
+TEST_F(ReachabilityTest, SetInitState_errortest)
+{
+    EXPECT_THROW(fsm2->setInitState({false, false, true});, std::runtime_error);
+    EXPECT_THROW(fsm2->setInitState({false});, std::runtime_error);
+    EXPECT_THROW(fsm2->setInitState({});, std::runtime_error);
+}
