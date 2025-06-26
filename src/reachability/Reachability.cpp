@@ -185,6 +185,17 @@ namespace ClassProject {
             throw std::runtime_error("The number of transition functions does not match with that of state bits");
         }
 
+        for(int i = 0; i < numStates; i++)
+        {
+            BDD_ID tempRoot = transitionFunctions[i];
+            std::set<BDD_ID> setVars;
+            findVars(tempRoot, setVars);
+            for(const BDD_ID& var : setVars) {
+                if( (var < 2) || (var > (numStates + 1)))
+                    throw std::runtime_error("An unknown ID is provided");
+            }
+        }
+
         this -> transitionFunctions = transitionFunctions;
     }
 
