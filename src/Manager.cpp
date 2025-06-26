@@ -240,9 +240,8 @@ void Manager::findVars(const BDD_ID &root, std::set<BDD_ID> &vars_of_root)
         BDD_ID top_var = topVar(root);
 
         auto [_, inserted] = vars_of_root.insert(top_var);
-        if (!inserted)
-            return; // Exit early if top_var was already in the set
-
+        // if (!inserted)
+        //     return; // Exit early if top_var was already in the set
         findVars(unique_table[root].high, vars_of_root);
         findVars(unique_table[root].low, vars_of_root);
     }
