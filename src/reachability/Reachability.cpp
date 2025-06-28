@@ -188,6 +188,10 @@ namespace ClassProject {
         for(int i = 0; i < numStates; i++)
         {
             BDD_ID tempRoot = transitionFunctions[i];
+
+            if(tempRoot >= uniqueTableSize())
+                    throw std::runtime_error("An unknown ID is provided");
+                    
             std::set<BDD_ID> setVars;
             findVars(tempRoot, setVars);
             for(const BDD_ID& var : setVars) {
