@@ -22,16 +22,16 @@ namespace ClassProject {
             initState.push_back(false);
         }
 
-        for(int i = 0; i < stateSize; i++)
-        {
-            BDD_ID nextBitState = createVar("s'" + std::to_string(i));
-            nextStateBits.push_back(nextBitState);
-        }
-
         for(int i = 0; i < inputSize; i++)
         {
             BDD_ID bitInput = createVar("i" + std::to_string(i));
             inputBits.push_back(bitInput);
+        }
+
+        for(int i = 0; i < stateSize; i++)
+        {
+            BDD_ID nextBitState = createVar("s'" + std::to_string(i));
+            nextStateBits.push_back(nextBitState);
         }
 
         // init transition function (identity function)
@@ -106,9 +106,9 @@ namespace ClassProject {
                 // update characteristic function
                 if(initState[i])
                 {
-                    c_s = and2( c_s, xnor2( s_i, FALSE_NODE));
-                } else{
                     c_s = and2( c_s, xnor2( s_i, TRUE_NODE));
+                } else{
+                    c_s = and2( c_s, xnor2( s_i, FALSE_NODE));
                 }
             }
 
@@ -189,13 +189,15 @@ namespace ClassProject {
         {
             BDD_ID tempRoot = transitionFunctions[i];
 
+            // case 1: the root does not exist in the unique table
             if(tempRoot >= uniqueTableSize())
                     throw std::runtime_error("An unknown ID is provided");
-                    
+
+            // case 2: the BDD contains an unknown variables 
             std::set<BDD_ID> setVars;
             findVars(tempRoot, setVars);
             for(const BDD_ID& var : setVars) {
-                if( (var < 2) || (var > (numStates + 1)))
+                if( (var < 2) || (var > (numStates + numInputs + 1)))
                     throw std::runtime_error("An unknown ID is provided");
             }
         }
