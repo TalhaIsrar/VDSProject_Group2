@@ -21,7 +21,7 @@ TEST_F(ReachabilityTest, ConstructorTest)
     }
 
     // test label of inputs
-    for (int i = 0; i < stateVars2.size(); i++)
+    for (int i = 0; i < inputVars3.size(); i++)
     {
         EXPECT_EQ(fsm2->getTopVarName(inputVars3.at(i)), "i" + std::to_string(i));
     }
@@ -39,7 +39,7 @@ TEST_F(ReachabilityTest, SetTransitionTestErr)
     BDD_ID s1 = stateVars2.at(1);
 
     // unknown ID of node in transitionFunctions
-    for(int i = 7; i < 50; i++)
+    for(int i = (stateVars2.size() + inputVars3.size() + 1); i < 50; i++)
     {
         transitionFunctions.push_back(i);
         transitionFunctions.push_back(i + 1);
@@ -106,7 +106,7 @@ TEST_F(ReachabilityExample1Test, StateDistanceTest)
 }
 
 // Example 2
-TEST_F(ReachabilityExample2Test, IsReachableWorks)
+TEST_F(ReachabilityExample2Test, IsReachableTest)
 {
     EXPECT_THROW(fsm->isReachable({false}), std::runtime_error);
 
@@ -116,7 +116,7 @@ TEST_F(ReachabilityExample2Test, IsReachableWorks)
     EXPECT_TRUE(fsm->isReachable({true, true}));
 }
 
-TEST_F(ReachabilityExample2Test, StateDistanceWorks)
+TEST_F(ReachabilityExample2Test, StateDistanceTest)
 {
     EXPECT_THROW(fsm->stateDistance({false}), std::runtime_error);
 
@@ -127,7 +127,7 @@ TEST_F(ReachabilityExample2Test, StateDistanceWorks)
 }
 
 // Example 3
-TEST_F(ReachabilityExample3Test, IsReachableWorks)
+TEST_F(ReachabilityExample3Test, IsReachablTest)
 {
     EXPECT_THROW(fsm->isReachable({false, false}), std::runtime_error);
 
@@ -142,7 +142,7 @@ TEST_F(ReachabilityExample3Test, IsReachableWorks)
     EXPECT_FALSE(fsm->isReachable({true, true, true}));
 }
 
-TEST_F(ReachabilityExample3Test, StateDistanceWorks)
+TEST_F(ReachabilityExample3Test, StateDistanceTest)
 {
     EXPECT_THROW(fsm->stateDistance({false, true}), std::runtime_error);
 
@@ -158,7 +158,7 @@ TEST_F(ReachabilityExample3Test, StateDistanceWorks)
 }
 
 // Example 4
-TEST_F(ReachabilityExample4Test, IsReachableWorks)
+TEST_F(ReachabilityExample4Test, IsReachableTest)
 {
     EXPECT_THROW(fsm->isReachable({false, false}), std::runtime_error);
 
@@ -173,7 +173,7 @@ TEST_F(ReachabilityExample4Test, IsReachableWorks)
     EXPECT_FALSE(fsm->isReachable({true, false, true}));
 }
 
-TEST_F(ReachabilityExample4Test, StateDistanceWorks)
+TEST_F(ReachabilityExample4Test, StateDistanceTest)
 {
     EXPECT_THROW(fsm->stateDistance({false, true}), std::runtime_error);
 

@@ -49,11 +49,6 @@ namespace ClassProject {
         reachableReady  = false;
     }
 
-    Reachability::Reachability(unsigned int stateSize)
-    : Reachability(stateSize, 0)
-    {
-    }
-
     // Return state BDD_IDs
     const std::vector<BDD_ID>& Reachability::getStates() const 
     {

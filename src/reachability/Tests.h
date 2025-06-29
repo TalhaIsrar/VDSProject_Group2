@@ -7,11 +7,13 @@
 using namespace ClassProject;
 
 struct ReachabilityTest : testing::Test {
-
-    std::unique_ptr<ClassProject::ReachabilityInterface> fsm2 = std::make_unique<ClassProject::Reachability>(2, 3);
+    
+    // 2 state bits, 3 inputs
+    std::unique_ptr<ClassProject::ReachabilityInterface> fsm2 = std::make_unique<ClassProject::Reachability>(2);
 
     std::vector<BDD_ID> stateVars2 = fsm2->getStates();
     std::vector<BDD_ID> inputVars3 = fsm2->getInputs();
+
     std::vector<BDD_ID> transitionFunctions;
 
 };
@@ -22,6 +24,7 @@ protected:
     std::unique_ptr<ClassProject::ReachabilityInterface> fsm;
     void SetUp() override
     {
+        // 1 state bit, 2 inputs
         fsm = std::make_unique<ClassProject::Reachability>(1, 2);
         
         std::vector<BDD_ID> stateBits = fsm->getStates();
@@ -32,9 +35,13 @@ protected:
         BDD_ID i1 = inputBits.at(1);
 
         std::vector<BDD_ID> transitionFunctions;
-        transitionFunctions.push_back(fsm->or2(fsm->and2(fsm->neg(s0), i1), fsm->and2(s0, fsm->neg(i0)))); // s0' = neg(s0)*i1 + s0*neg(i0)
+
+        // s0' = neg(s0)*i1 + s0*neg(i0)
+        transitionFunctions.push_back(fsm->or2(fsm->and2(fsm->neg(s0), i1), fsm->and2(s0, fsm->neg(i0)))); 
+
         fsm->setTransitionFunctions(transitionFunctions);
 
+        // Initial state: 0
         fsm->setInitState({false});
     }
 };
@@ -47,6 +54,7 @@ protected:
 
     void SetUp() override
     {
+        // 2 state bits, 1 inputs
         fsm = std::make_unique<ClassProject::Reachability>(2, 1);
 
         std::vector<BDD_ID> stateBits = fsm->getStates();
@@ -57,10 +65,16 @@ protected:
         BDD_ID i0 = inputBits.at(0);
 
         std::vector<BDD_ID> transitionFunctions;
-        transitionFunctions.push_back(fsm->or2(fsm->and2(fsm->neg(s1), fsm->neg(s0)), fsm->and2(fsm->neg(s1), s0))); // s0' = neg(s1)*neg(s0) + neg(s1)*s0
-        transitionFunctions.push_back(fsm->and2(fsm->and2(fsm->neg(s1), s0), fsm->neg(i0))); // s1' = neg(s1)*s0*neg(i0)
+
+        // s0' = neg(s1)*neg(s0) + neg(s1)*s0
+        transitionFunctions.push_back(fsm->or2(fsm->and2(fsm->neg(s1), fsm->neg(s0)), fsm->and2(fsm->neg(s1), s0))); 
+
+        // s1' = neg(s1)*s0*neg(i0)
+        transitionFunctions.push_back(fsm->and2(fsm->and2(fsm->neg(s1), s0), fsm->neg(i0))); 
+
         fsm->setTransitionFunctions(transitionFunctions);
 
+        // Initial state: 00   
         fsm->setInitState({false, false});
     }
 };

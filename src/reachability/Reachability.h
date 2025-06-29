@@ -9,8 +9,7 @@ namespace ClassProject {
     class Reachability : public ReachabilityInterface {
     public:
         // Constructor
-        Reachability(unsigned int stateSize, unsigned int inputSize);
-        Reachability(unsigned int stateSize);
+        Reachability(unsigned int stateSize, unsigned int inputSize = 0);
         
         // Implementations of the virtual function
         const std::vector<BDD_ID> &getStates() const override;
