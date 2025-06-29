@@ -529,16 +529,16 @@ TEST_F(GateTest, find_var_test){
 }
 
 // one more Find Variables
-TEST_F(SmallTest, find_var_test){
-    // F = x1*x2 + x1_bar*x2_bar*x3
-    BDD_ID _x2_AND_x3 = smallTest.and2(smallTest.neg(x2_ID), x3_ID);
-    BDD_ID _x1_AND__x2_AND_x3 = smallTest.and2(smallTest.neg(x1_ID), _x2_AND_x3);
-    BDD_ID x1_AND_x2 = smallTest.and2(x1_ID, x2_ID);
-    BDD_ID F = smallTest.or2(x1_AND_x2, _x1_AND__x2_AND_x3);
+TEST_F(GateTest, find_var_test_2){
+    // F = a*b + a_bar*b_bar*c
+    BDD_ID _B_AND_C = gateTest.and2(gateTest.neg(B_ID), C_ID);
+    BDD_ID _A_AND__B_AND_C = gateTest.and2(gateTest.neg(A_ID), _B_AND_C);
+    BDD_ID A_AND_B = gateTest.and2(A_ID, B_ID);
+    BDD_ID F = gateTest.or2(A_AND_B, _A_AND__B_AND_C);
 
-    std::set<BDD_ID> reachable_vars = {x1_ID, x2_ID, x3_ID};
+    std::set<BDD_ID> reachable_vars = {A_ID, B_ID, C_ID};
     std::set<BDD_ID> vars = {};
-    smallTest.findVars(F, vars);
+    gateTest.findVars(F, vars);
     EXPECT_EQ(vars, reachable_vars);
 }
 

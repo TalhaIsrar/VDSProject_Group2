@@ -53,19 +53,6 @@ public:
     BDD_ID FALSE_ID = 0; 
 };
 
-class SmallTest : public testing::Test {
-public:
-    Manager smallTest;
-
-    BDD_ID x1_ID = smallTest.createVar("x1");
-    BDD_ID x2_ID = smallTest.createVar("x2");
-    BDD_ID x3_ID = smallTest.createVar("x3");
-
-
-    BDD_ID TRUE_ID = 1;
-    BDD_ID FALSE_ID = 0; 
-};
-
 
 class BDDTest : public testing::Test {
 public:
