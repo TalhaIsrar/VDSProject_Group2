@@ -154,4 +154,25 @@ protected:
     }
 };
 
+// The failed test from supervisor
+struct ReachabilityLastTest : testing::Test {
+
+    std::unique_ptr<ClassProject::ReachabilityInterface> fsm1 = std::make_unique<ClassProject::Reachability>(1);
+
+};
+
+TEST_F(ReachabilityLastTest, SetInitState) { /* NOLINT */
+
+    ASSERT_NO_THROW(fsm1->setInitState({true}));
+
+    ASSERT_FALSE(fsm1->isReachable({false}));
+    ASSERT_TRUE(fsm1->isReachable({true}));
+
+    ASSERT_NO_THROW(fsm1->setInitState({false}));
+
+    ASSERT_FALSE(fsm1->isReachable({true}));
+    ASSERT_TRUE(fsm1->isReachable({false}));
+
+}
+
 #endif

@@ -198,6 +198,7 @@ namespace ClassProject {
         }
 
         this -> transitionFunctions = transitionFunctions;
+        reachableReady = false;
     }
 
     // Set a new initial state
@@ -208,6 +209,7 @@ namespace ClassProject {
         }
 
         initState = stateVector;
+        reachableReady = false;
     }
 
     // check if a state is in a set
